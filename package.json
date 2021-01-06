@@ -1,0 +1,43 @@
+{
+  "name": "test-adapter-converter",
+  "displayName": "TestAdapter to TestProvider converter",
+  "author": "Holger Benl <hbenl@evandor.de>",
+  "publisher": "hbenl",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "VSCode extension that turns TestAdapters into TestProviders",
+  "homepage": "https://github.com/hbenl/test-adapter-converter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hbenl/test-adapter-converter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hbenl/test-adapter-converter/issues"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "test",
+    "testing"
+  ],
+  "main": "out/main.js",
+  "scripts": {},
+  "enableProposedApi": true,
+  "devDependencies": {
+    "@types/vscode": "^1.52.0",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "vscode-test-adapter-api": "^1.9.0"
+  },
+  "extensionDependencies": [
+    "hbenl.vscode-test-explorer"
+  ],
+  "engines": {
+    "vscode": "^1.53.0"
+  },
+  "activationEvents": [
+    "*"
+  ]
+}
