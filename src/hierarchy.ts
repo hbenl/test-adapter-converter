@@ -301,29 +301,3 @@ export class ConvertedTestHierarchy implements vscode.TestHierarchy<TestAdapterI
         }
     }
 }
-
-export class DummyTestHierarchy implements vscode.TestHierarchy<TestAdapterItem> {
-
-    readonly root: TestAdapterItem;
-    private readonly onDidDiscoverInitialTestsEmitter = new vscode.EventEmitter<void>();
-    readonly onDidChangeTest: vscode.Event<TestAdapterItem>;
-    private readonly onDidChangeTestEmitter = new vscode.EventEmitter<TestAdapterItem>();
-    readonly onDidDiscoverInitialTests: vscode.Event<void>;
-
-    constructor() {
-        this.root = {
-            id: "dummy",
-            label: "dummy",
-            state: new vscode.TestState(vscode.TestRunState.Unset),
-        };
-        this.onDidDiscoverInitialTests = this.onDidDiscoverInitialTestsEmitter.event;
-        this.onDidChangeTest = this.onDidChangeTestEmitter.event;
-
-        setTimeout(() => this.onDidDiscoverInitialTestsEmitter.fire(), 0);
-    }
-
-    dispose(): void {
-        this.onDidDiscoverInitialTestsEmitter.dispose();
-        this.onDidChangeTestEmitter.dispose();
-    }
-}

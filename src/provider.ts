@@ -1,30 +1,28 @@
 import * as vscode from "vscode";
 import { TestAdapter } from "vscode-test-adapter-api";
-import { ConvertedTestHierarchy, DummyTestHierarchy, TestAdapterItem } from "./hierarchy";
+import { ConvertedTestHierarchy, TestAdapterItem } from "./hierarchy";
 
 export class TestAdapterProvider implements vscode.TestProvider<TestAdapterItem> {
 
-    private readonly hierarchies = new WeakMap<vscode.WorkspaceFolder, vscode.TestHierarchy<TestAdapterItem>>();
+    private readonly hierarchies = new WeakMap<vscode.WorkspaceFolder, ConvertedTestHierarchy | undefined>();
 
     constructor(
         public readonly adapter: TestAdapter
     ) {}
 
-    createWorkspaceTestHierarchy(workspaceFolder: vscode.WorkspaceFolder): vscode.TestHierarchy<TestAdapterItem> {
+    createWorkspaceTestHierarchy(workspaceFolder: vscode.WorkspaceFolder) {
 
         if (!this.hierarchies.has(workspaceFolder)) {
 
-            let hierarchy: vscode.TestHierarchy<TestAdapterItem>;
+            let hierarchy: ConvertedTestHierarchy | undefined;
             if (workspaceFolder === this.adapter.workspaceFolder) {
                 hierarchy = new ConvertedTestHierarchy(this.adapter);
-            } else {
-                hierarchy = new DummyTestHierarchy();
             }
 
             this.hierarchies.set(workspaceFolder, hierarchy);
         }
 
-        return this.hierarchies.get(workspaceFolder)!;
+        return this.hierarchies.get(workspaceFolder);
     }
 
     runTests(options: vscode.TestRunOptions<TestAdapterItem>, cancellationToken: vscode.CancellationToken): void {
